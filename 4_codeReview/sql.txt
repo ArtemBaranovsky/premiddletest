@@ -1,0 +1,13 @@
+$query = 'SELECT rev.id, COALESCE(SUM(CASE WHEN rait.mark=-1 THEN 1 END), 0) AS review_dislikes
+
+		          FROM reviews AS rev
+
+		          LEFT JOIN public.reviews_rating AS rait ON (rait.id_review=rev.id AND rait.status=0)
+
+		          WHERE rev.id_item = 222 AND rev.status IN (0,1)
+
+		          GROUP BY rev.id
+
+		          ORDER BY rev.crtime DESC';
+				  
+
