@@ -11,3 +11,15 @@ $query = 'SELECT rev.id, COALESCE(SUM(CASE WHEN rait.mark=-1 THEN 1 END), 0) AS 
 		          ORDER BY rev.crtime DESC';
 				  
 
+Выбрать из таблицы reviews (присвоить для удобства алиас rev)
+    поле id таблицы reviews_rating
+    и сумму подстановочных значений поля mark таблицы reviews_rating, если значенияя = -1, возращать 1,
+        если итоговоая сумма имеет значение NULL, то вернуть 0 (т.е. это фактически количество дизлайков).
+        Присвоить этому полю алиас review_dislikes
+
+Присоединить LEFT JOINом таблицу reviews_rating (алиас rev) из схемы public по связи rait.id_review = rev.id
+    для айтем с айди reviews_rating.id_item если он имеет статус rev.status 0 или 1
+
+Сгруппировать полученные результаты при выборке по полю reviews_rating.id
+
+Вывести итоговый результат с сортировкой по полю reviews_rating.crtime в убывающем порядке (в самой выборке поля reviews_rating.crtime не будет).
